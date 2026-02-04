@@ -7,7 +7,19 @@
 
 <style>
 *{box-sizing:border-box;font-family:system-ui,Segoe UI,sans-serif}
-html,body{margin:0;height:100%;background:#200;color:#fff;overflow:hidden}
+html{
+  margin:0;
+  height:100%;
+  background:#200;
+  color:#fff;
+}
+
+body{
+  margin:0;
+  min-height:100%;
+  overflow-x:hidden;
+}
+ 
 body{background:radial-gradient(circle at top,#b30000,#220000)}
 
 /* ===== COIN BG ===== */
@@ -414,29 +426,29 @@ function startBGM() {
   bgStarted = true;
 
   const bg = document.getElementById("bgSound");
-  bg.volume = 0;       // mulai dari 0
+  bg.currentTime = 0;
+  bg.volume = 0;
   bg.play().catch(()=>{});
 
   let vol = 0;
   const fade = setInterval(() => {
-    vol += 0.02;       // kecepatan fade (atur sesuai selera)
-    if (vol >= 0.3) {  // volume max (30%)
+    vol += 0.015;
+    if (vol >= 0.3) {
       vol = 0.3;
       clearInterval(fade);
     }
     bg.volume = vol;
-  }, 100);
+  }, 120);
 }
 
-/* === UNLOCK AUDIO SAAT INTERAKSI PERTAMA === */
-document.addEventListener("click", startBGM, { once: true });
-document.addEventListener("touchstart", startBGM, { once: true });
+/* === AUDIO UNLOCK (SEMUA EVENT PENTING) === */
+["click","touchstart","pointerdown","keydown"].forEach(evt=>{
+  document.addEventListener(evt, startBGM, { once:true });
+});
 
-  /* ===== BGM VOLUME ===== */
-const bgSound = $("bgSound");
-bgSound.volume = 0.3; // volume 30%
 </script>
 </body>
 </html>
+
 
 
